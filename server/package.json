@@ -1,0 +1,11 @@
+{
+  "name": "ecommerce-server",
+  "version": "1.0.0",
+  "description": "ecommerce-server",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "adacra",
+  "license": "ISC"
+}
