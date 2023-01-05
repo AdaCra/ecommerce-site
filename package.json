@@ -1,0 +1,30 @@
+{
+  "name": "bigbuy",
+  "version": "1.0.0",
+  "description": "fullstack mern ecommerce site",
+  "main": "server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "SET NODE_ENV=DEVELOPMENT& nodemon backend/server",
+    "live": "SET NODE_ENV=PRODUCTION& nodemon backend/server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AdaCra/ecommerce-site.git"
+  },
+  "author": "Adacra",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AdaCra/ecommerce-site/issues"
+  },
+  "homepage": "https://github.com/AdaCra/ecommerce-site#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongodb": "^4.13.0",
+    "mongoose": "^6.8.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
