@@ -70,7 +70,7 @@ const prodcutSchema = new mongoose.Schema({
         maxLength: [5, 'Product cannot exceed 99999 units'],
         default: 0
     },
-    numOFReviews: {
+    numOfReviews: {
         type: Number,
         default: 0
     },
