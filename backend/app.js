@@ -1,14 +1,12 @@
-const express = require('express');
-const app = express();
-
+const express = require('express');                         /*import express*/
+const app = express();                                      /*assign express*/
+const products = require('./routes/product')                /*import route handling*/
+const errorMiddleware = require('./middleware/errors')      /*import error handling*/
 
 app.use(express.json());
 
-
-
-// import routes
-const products = require('./routes/product')
-
 app.use('/api/v1', products);
+
+app.use(errorMiddleware);
 
 module.exports = app
