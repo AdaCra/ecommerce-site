@@ -64,7 +64,7 @@ const prodcutSchema = new mongoose.Schema({
         type: String,
         required: [true,'Please enter Product Seller']
     },
-    units: {
+    stock: {
         type: Number,
         required: [true, 'Please enter number of stock units.'],
         maxLength: [5, 'Product cannot exceed 99999 units'],

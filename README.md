@@ -1,43 +1,66 @@
 # ecommerce-site
-MERN STACK:
-    - MongoDB,
-    - Express.js,
-    - React, 
-    - Node.js,
-    - Javascript
-    - Redux,
 
-API's 
-    - Stripe payment API
+MERN STACK: - MongoDB, - Express.js, - React, - Node.js, - Javascript - Redux,
 
-**FRONTEND
+API's - Stripe payment API
+
+\*\*FRONTEND
+
 - [ ] Main page
-    - [ ] Specials
-    - [ ] Product category
-    - [ ] Product filtering
-    - [ ] Product search
-    - [ ] Shopping Cart
-        - [ ] Shopping Cart retained after login
+
+  - [ ] Specials
+  - [ ] Product category
+  - [ ] Product filtering
+  - [ ] Product search
+  - [ ] Shopping Cart
+    - [ ] Shopping Cart retained after login
 
 - [ ] Individual product page
-    - [ ] Item Review page for logged in Users
+
+  - [ ] Item Review page for logged in Users
 
 - [ ] Users
-    - [ ] Account Creation
-        - [ ] Account Edit
-        - [ ] Billing and shipping address
-        - [ ] Cloud storage of profile picsP
-    - [ ] Purchase function: stripe
-    - [ ] Order confirmation
-    - [ ] Order tracking
-
-
-
-**BACKEND
+  - [ ] Account Creation
+    - [ ] Account Edit
+    - [ ] Billing and shipping address
+    - [ ] Cloud storage of profile picsP
+  - [ ] Purchase function: stripe
+  - [ ] Order confirmation
+  - [ ] Order tracking
 - [ ] Admin Login
-- [ ] Admin Dashboard
-    - [ ] orders
-    - [ ] product CRUD
-        - [ ] cloud storage of product pictures
-    - [ ] account blocking
-    - [ ] user access control
+  - [ ] Admin Dashboard
+    - [ ] Orders
+    - [ ] Product Management
+      - [ ] Create
+      - [ ] Edit
+      - [ ] Delete
+    - [ ] User Control
+
+\*\*BACKEND
+
+- [ ] Product DB
+  - [x] Establish Product Models
+  - [x] Establish atlas DB
+  - [ ] Product CRUD
+    - [x] Get all products
+    - [x] Get single product
+    - [x] Find products by keywords
+    - [x] Delete products
+    - [ ] Product Filtering
+  - [ ] Setup Cloudinary storage of product pictures
+
+- [ ] User DB
+  - [ ] Establish User Models
+  - [ ] Establish atlas DB
+  - [ ] Password Encryption    
+  - [ ] Account Authentication
+  - [ ] User Access Control (admin)
+  - [ ] User CRUD
+    - [ ] Create User
+    - [ ] Edit User
+    - [ ] Delete User
+    - [ ] User blocking
+
+- [ ] Pagination (browser overload)
+- [ ] Error Handling
+  - [ ] Account blocking

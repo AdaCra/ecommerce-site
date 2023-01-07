@@ -1,11 +1,20 @@
 const Product = require("../models/products");
 const ErrorHandler = require("../utils/errorHandler")
 const catchAsyncErrors = require("../middleware/catchAsyncErrors")
+const APIFeatures = require('../utils/apiFeatures')
+
 
 /* ------ GENERAL ------*/
-// get all products from api/v1/products
+// get all products from api/v1/products (...?keyword=...)
 exports.getProducts = catchAsyncErrors (async (req, res, next) => {
-  const products = await Product.find();
+  let resultsShownPerPage = 5
+  const apiFeatures = new APIFeatures(Product.find(), req.query)
+        .search()
+        .filter()
+        .pagination(resultsShownPerPage)
+  
+  
+  const products = await apiFeatures.query;
 
   res.status(200).json({
     success: true,
