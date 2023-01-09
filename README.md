@@ -51,12 +51,14 @@ API's - Stripe payment API
 
 - [ ] User DB
   - [x] Establish User Models
-  - [ ] Establish atlas DB
-  - [ ] Password Encryption    
-  - [ ] Account Authentication
+  - [x] Establish atlas DB
+  - [x] Password Encryption    
+  - [x] Account Authentication
+  - [x] Password Encryption
+  - [x] JSON Webtoken
   - [ ] User Access Control (admin)
   - [ ] User CRUD
-    - [ ] Create User
+    - [x] Create User
     - [ ] Edit User
     - [ ] Delete User
     - [ ] User blocking
