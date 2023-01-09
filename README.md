@@ -56,10 +56,12 @@ API's - Stripe payment API
   - [x] Account Authentication
   - [x] Password Encryption
   - [x] JSON Webtoken
-  - [x] ACTP only 
-  - [ ] User Access Control (admin)
+  - [x] ACTP only Cookie
+  - [x] User Access Control (admin)
+  - [x] User Roles
   - [ ] User CRUD
     - [x] Create User
+    - [x] Logout User
     - [ ] Edit User
     - [ ] Delete User
     - [ ] User blocking

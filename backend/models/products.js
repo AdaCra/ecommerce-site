@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const prodcutSchema = new mongoose.Schema({
+const productSchema = new mongoose.Schema({
     name: {
         type: String,
         required: [true,'Please enter product name.'],
@@ -90,6 +90,11 @@ const prodcutSchema = new mongoose.Schema({
             }
         }
     ],
+    user: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User',
+        required: true
+    },
     createdAt: {
         type: Date,
         default: Date.now
@@ -97,4 +102,4 @@ const prodcutSchema = new mongoose.Schema({
     
 })
 
-module.exports = mongoose.model('Product', prodcutSchema);
+module.exports = mongoose.model('Product', productSchema );
