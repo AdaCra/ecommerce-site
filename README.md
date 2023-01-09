@@ -1,6 +1,6 @@
 # ecommerce-site
 
-MERN STACK: - MongoDB, - Express.js, - React, - Node.js, - Javascript - Redux,
+MERN STACK: - Mongoose, - Express.js, - React, - Node.js, - Javascript - Redux,
 
 API's - Stripe payment API
 
@@ -56,6 +56,7 @@ API's - Stripe payment API
   - [x] Account Authentication
   - [x] Password Encryption
   - [x] JSON Webtoken
+  - [x] ACTP only 
   - [ ] User Access Control (admin)
   - [ ] User CRUD
     - [x] Create User
