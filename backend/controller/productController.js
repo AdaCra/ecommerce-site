@@ -7,7 +7,8 @@ const APIFeatures = require('../utils/apiFeatures')
 /* ------ GENERAL ------*/
 // get all products from api/v1/products (...?keyword=...)
 exports.getProducts = catchAsyncErrors (async (req, res, next) => {
-  let resultsShownPerPage = 5
+  let resultsShownPerPage = 4
+  const productCount = await Product.countDocuments()
   const apiFeatures = new APIFeatures(Product.find(), req.query)
         .search()
         .filter()
@@ -15,10 +16,16 @@ exports.getProducts = catchAsyncErrors (async (req, res, next) => {
   
   
   const products = await apiFeatures.query;
+  const pageNumber = parseInt(apiFeatures.queryStr.page)
+  const pageStartNumber = ((pageNumber - 1)*resultsShownPerPage) + 1
+  const pageEndNumber = pageStartNumber + products.length - 1
 
   res.status(200).json({
     success: true,
+    pageNumber,
     count: products.length,
+    showing: `${pageStartNumber} to ${pageEndNumber}`,
+    productCount,
     message: "data to follow",
     products,
   });

@@ -7,7 +7,7 @@
     "start": "node backend/server.js",
     "dev": "SET NODE_ENV=DEVELOPMENT& nodemon backend/server",
     "prod": "SET NODE_ENV=PRODUCTION& nodemon backend/server",
-    "seeder":"node backend/utils/seeder.js"
+    "seeder": "node backend/utils/seeder.js"
   },
   "repository": {
     "type": "git",
@@ -20,10 +20,17 @@
   },
   "homepage": "https://github.com/AdaCra/ecommerce-site#readme",
   "dependencies": {
+    "bcrypt": "^5.1.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.1",
+    "cookie-parser": "^1.4.6",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
     "mongodb": "^4.13.0",
-    "mongoose": "^6.8.2"
+    "mongoose": "^6.8.2",
+    "nodemailer": "^6.8.0",
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.20"

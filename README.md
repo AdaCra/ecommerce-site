@@ -41,16 +41,16 @@ API's - Stripe payment API
 - [ ] Product DB
   - [x] Establish Product Models
   - [x] Establish atlas DB
-  - [ ] Product CRUD
+  - [x] Product CRUD
     - [x] Get all products
     - [x] Get single product
     - [x] Find products by keywords
     - [x] Delete products
-    - [ ] Product Filtering
+    - [x] Product Filtering
   - [ ] Setup Cloudinary storage of product pictures
 
 - [ ] User DB
-  - [ ] Establish User Models
+  - [x] Establish User Models
   - [ ] Establish atlas DB
   - [ ] Password Encryption    
   - [ ] Account Authentication
@@ -61,6 +61,8 @@ API's - Stripe payment API
     - [ ] Delete User
     - [ ] User blocking
 
-- [ ] Pagination (browser overload)
-- [ ] Error Handling
-  - [ ] Account blocking
+- [ ] Orders DB
+  - [ ] Establish Order Models
+
+- [x] Pagination (browser overload)
+- [x] Error Handling
