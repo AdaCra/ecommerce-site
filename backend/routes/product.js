@@ -16,7 +16,7 @@ router.route('/products').get(getProducts);
 router.route('/product/:id').get(getSingleProduct);
 
 // posts
-router.route('/admin/product/new').post(newProduct);
+router.route('/admin/product/new').post(isAuthenticatedUser, newProduct);
 
 //puts & delete
 router.route('/admin/product/:id')

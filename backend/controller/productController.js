@@ -1,4 +1,5 @@
 const Product = require("../models/products");
+
 const ErrorHandler = require("../utils/errorHandler")
 const catchAsyncErrors = require("../middleware/catchAsyncErrors")
 const APIFeatures = require('../utils/apiFeatures')
@@ -49,7 +50,7 @@ exports.getSingleProduct = catchAsyncErrors (async (req, res, next) => {
 // create new product via /api/v1/admin/product/new
 exports.newProduct = catchAsyncErrors (async (req, res, next) => {
 
-  req.body.user = req.user.id;
+  req.body.user = req.user.id
 
   const product = await Product.create(req.body);
   res.status(201).json({

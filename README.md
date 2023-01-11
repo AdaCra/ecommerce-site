@@ -59,6 +59,9 @@ API's - Stripe payment API
   - [x] ACTP only Cookie
   - [x] User Access Control (admin)
   - [x] User Roles
+  - [x] User Password Reset
+    - [x] generate encrypted token
+    - [x] email link to user
   - [ ] User CRUD
     - [x] Create User
     - [x] Logout User
