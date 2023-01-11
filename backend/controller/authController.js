@@ -73,7 +73,7 @@ exports.forgotPassword = catchAsyncErrors ( async ( req, res, next ) => {
     // create password reset URL
     const resetUrl = `${req.protocol}://${req.get('host')}/api/v1/password/reset/${resetToken}`;
 
-    const message = `Your password reset token is as follows:\n\n${resetUrl}\n\nIf you did not request this email, please ignore it.`
+    const message = `Your password reset token is as follows:\n\n${resetUrl}\n\nThis link will only be valid for 30 minutes\n\n If you did not request this email, please ignore it.`
     try{
         await sendEmail({
             email: user.email, 
@@ -94,6 +94,41 @@ exports.forgotPassword = catchAsyncErrors ( async ( req, res, next ) => {
         return next(new ErrorHandler( error.message, 500 ))
     }
 })
+
+
+// Reset Password   =>  /api/v1/password/reset/:token
+exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
+
+    // Hash URL token
+    const resetPasswordToken = crypto.createHash('sha256').update(req.params.token).digest('hex')
+
+    const user = await User.findOne({
+        resetPasswordToken,
+        resetPasswordExpire: { $gt: Date.now() }
+    })
+
+    if (!user) {
+        return next(new ErrorHandler('Password reset token is invalid or has been expired', 400))
+    }
+
+    if (req.body.password !== req.body.confirmPassword) {
+        return next(new ErrorHandler('Password does not match', 400))
+    }
+
+    // Setup new password
+    user.password = req.body.password;
+
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+
+    await user.save();
+
+    sendToken(user, 200, res)
+
+})
+
+
+
 // logout user via /api/v1/logout
 exports.logout = catchAsyncErrors ( async ( req, res, next) => {
     res.cookie('token', null, {
