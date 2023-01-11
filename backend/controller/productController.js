@@ -6,7 +6,7 @@ const APIFeatures = require('../utils/apiFeatures')
 
 
 /* ------ GENERAL ------*/
-// get all products via api/v1/products (...?keyword=...)
+// get all products  --via--  api/v1/products (...?keyword=...)
 exports.getProducts = catchAsyncErrors (async (req, res, next) => {
   let resultsShownPerPage = 4
   const productCount = await Product.countDocuments()
@@ -32,7 +32,7 @@ exports.getProducts = catchAsyncErrors (async (req, res, next) => {
   });
 });
 
-// get single product via api/v1/products via _id
+// get single product  --via--  api/v1/products/_id
 exports.getSingleProduct = catchAsyncErrors (async (req, res, next) => {
   const product = await Product.findById(req.params.id);
   if (!product) {
@@ -47,7 +47,7 @@ exports.getSingleProduct = catchAsyncErrors (async (req, res, next) => {
 
 
 /* ------ ADMIN ------*/
-// create new product via /api/v1/admin/product/new
+// create new product  --via--  /api/v1/admin/product/new
 exports.newProduct = catchAsyncErrors (async (req, res, next) => {
 
   req.body.user = req.user.id
@@ -77,7 +77,7 @@ exports.updateProduct = catchAsyncErrors (async (req, res, next) => {
   });
 });
 
-// delete product via api/v1/admin/products/:id
+// delete product  --via--  api/v1/admin/products/:id
 exports.deleteProduct = catchAsyncErrors (async (req, res, next) => {
   const product = await Product.findById(req.params.id);
   if (!product) {

@@ -5,7 +5,7 @@ const sendToken = require('../utils/jwtToken');
 const sendEmail = require('../utils/sendEmail');
 const crypto = require('crypto');
 
-//user registration via /api/v1/register
+//user registration  --via--  /api/v1/register
 exports.registerUser = catchAsyncErrors (async (req, res, next) => {
     const {name, email, password} = req.body;
 
@@ -29,7 +29,7 @@ res.status(201).json({
 })
 })
 
-// user login via /api/v1/login
+// user login  --via--  /api/v1/login
 
 exports.loginUser = catchAsyncErrors (async (req, res, next) => {
     const {email, password} = req.body
@@ -57,7 +57,7 @@ exports.loginUser = catchAsyncErrors (async (req, res, next) => {
     sendToken(user, 200, res)
 })
 
-// forgot: password reset email via /api/v1/password/forgot
+// forgot: password reset email  --via--  /api/v1/password/forgot
 exports.forgotPassword = catchAsyncErrors ( async ( req, res, next ) => {
     const user = await User.findOne({ email: req.body.email});
 
@@ -96,7 +96,7 @@ exports.forgotPassword = catchAsyncErrors ( async ( req, res, next ) => {
 })
 
 
-// Reset Password   =>  /api/v1/password/reset/:token
+// Reset Password  --via--  /api/v1/password/reset/:token
 exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
 
     // Hash URL token
@@ -127,9 +127,56 @@ exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
 
 })
 
+// Change User Password  --via--  /api/v1/password/update
+exports.updateUserPassword = catchAsyncErrors ( async (req,res, next) => {
+    const user = await User.findById(req.user.id).select('+password');
+
+    // confirm previous user password
+    const isMatched = await user.comparePassword(req.body.existingPassword)
+    if(!isMatched) {
+        return next(new ErrorHandler('The password you have entered does not match the current password',400 ))
+    }
+
+    user.password = req.body.password;
+    await user.save();
+
+    sendToken(user, 200, res)
+})
 
 
-// logout user via /api/v1/logout
+// return current user data  --via--  /api/v1/me
+exports.getCurrentUser = catchAsyncErrors ( async (req,res, next) => {
+    const user = await User.findById(req.user.id);
+
+    res.status(200).json({
+        success:true,
+        user
+    })
+})
+
+// Change User Password  --via--  /api/v1/me/update
+exports.updateUserProfile = catchAsyncErrors ( async (req,res, next) => {
+    const userDataUpdate = {
+        name: req.body.name,
+        email: req.body.email
+    }
+    // TODO dep cloudinary...Update avatar
+
+    const user = await User.findByIdAndUpdate(req.user.id, userDataUpdate, {
+        new: true,
+        runValidators: true,
+        useFindAndModify: false
+    })
+
+    res.status(200).json({
+        success: true,
+        message: 'User Profile Updated'
+    })
+
+})
+
+
+// logout user  --via--  /api/v1/logout
 exports.logout = catchAsyncErrors ( async ( req, res, next) => {
     res.cookie('token', null, {
         expires: new Date(Date.now()),
@@ -139,5 +186,14 @@ exports.logout = catchAsyncErrors ( async ( req, res, next) => {
     res.status(200).json({
         status: true,
         message: 'User is logged out'
+    })
+})
+
+// Return all users  --via--  /api/v1/admin/users
+exports.returnAllUsers = catchAsyncErrors ( async (req, res, next) => {
+    const users = await User.find();
+    res.status(200).json({
+        success: true,
+        users
     })
 })
