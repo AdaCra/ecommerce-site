@@ -62,7 +62,7 @@ API's - Stripe payment API
   - [x] User Password Reset
     - [x] generate encrypted token
     - [x] email link to user
-  - [ ] User CRUD
+  - [x] User CRUD
     - [x] Create User
     - [x] Logout User
     - [x] Edit User
