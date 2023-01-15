@@ -2,6 +2,7 @@ const express = require('express');                         /*import express*/
 const app = express();                                      /*assign express*/
 
 const cookieParser = require('cookie-parser')
+const bodyParser = require('body-parser')
 
 /*import error handling*/
 const errorMiddleware = require('./middleware/errors') 
@@ -9,12 +10,14 @@ const errorMiddleware = require('./middleware/errors')
 /*import route handling*/
 const products = require('./routes/product')                
 const auth = require('./routes/auth')
+const order = require('./routes/order')
 
 app.use(express.json());
 app.use(cookieParser())
 
 app.use('/api/v1', products);
 app.use('/api/v1', auth);
+app.use('/api/v1', order);
 
 app.use(errorMiddleware);
 

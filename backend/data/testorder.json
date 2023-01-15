@@ -1,0 +1,31 @@
+{
+	"shippingInfo" : {
+        "name": "Bub",
+		"streetNo" : "3951",
+		"streetName" : "Smith Street",
+		"city" : "New York",
+		"postCode" : 10001,
+		"country" : "United States",
+        "additionalInfo" : "Please leave it at the flower store on the corner.",
+		"contactNo" : 5555551234
+	},
+	"orderItems" : [
+		{
+			"product" : "5fbff4439d9ba8406833ea73",
+			"name" : "Kauffman Orchards Homegrown McIntosh Apples",
+			"image" : "https://res.cloudinary.com/shopit/image/upload/v1606293152/products/i0k1wdwi5hrpmzwxvsds.jpg",
+			"price" : 2.75,
+			"quantity" : 1
+		}
+	],
+    "paymentInfo" : {
+		"id" : "pi_1HrMVNAlHMiRMt8E1BguvVIo",
+		"status": "succeeded"
+	},
+    "orderValue" : {
+        "itemsPrice" : 2.75,
+	    "taxPrice" : 0.14,
+	    "shippingPrice" : 25,
+	    "totalPrice" : 27.89
+    }
+}
