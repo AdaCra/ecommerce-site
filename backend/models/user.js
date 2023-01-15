@@ -34,13 +34,52 @@ const userSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        default: 'user'
-        // enum: ['user', 'admin']
+        default: 'user',
+        enum: {
+            values: [
+                'user',
+                'admin'
+            ]
+        }
+    },
+    suspension:{
+        status:{
+            type: String,
+            default: 'Active',
+            enum: {
+                values: [
+                    'Active',
+                    'Suspended'
+                ]
+            }
+        },
+        reason:{
+            type: String,
+            default: 'Account is Active',
+            enum:{
+                values: [
+                    'Account is Active',
+                    'Inactivity',
+                    'Suspicious Activity',
+                    'Contravention of T&C´s',
+                    'Fraud',
+                    'Harmful Behaviour',
+                    'Termination of Contract'
+                ]
+    
+            }
+        },
+        dateModified:{
+            type: Date,
+            default: Date.now
+        }
     },
     createdAt: {
         type: Date,
         default: Date.now
     },
+    
+
     resetPasswordToken: String,
     resetPasswordExpire: Date
 })

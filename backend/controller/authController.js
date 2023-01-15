@@ -155,7 +155,7 @@ exports.getCurrentUser = catchAsyncErrors ( async (req,res, next) => {
 })
 
 // Change User Password  --via--  /api/v1/me/update
-exports.updateUserProfile = catchAsyncErrors ( async (req,res, next) => {
+exports.updateProfile = catchAsyncErrors ( async (req,res, next) => {
     const userDataUpdate = {
         name: req.body.name,
         email: req.body.email
@@ -172,7 +172,6 @@ exports.updateUserProfile = catchAsyncErrors ( async (req,res, next) => {
         success: true,
         message: 'User Profile Updated'
     })
-
 })
 
 
@@ -189,11 +188,79 @@ exports.logout = catchAsyncErrors ( async ( req, res, next) => {
     })
 })
 
+
+/*      ADMIN       */
 // Return all users  --via--  /api/v1/admin/users
-exports.returnAllUsers = catchAsyncErrors ( async (req, res, next) => {
+exports.adminReturnAllUsers = catchAsyncErrors ( async (req, res, next) => {
     const users = await User.find();
     res.status(200).json({
         success: true,
         users
+    })
+})
+
+// Return single user details --via--  /api/v1/admin/user/:id
+exports.adminGetUserDetails = catchAsyncErrors ( async (req, res, next) => {
+    const user = await User.findById(req.params.id);
+
+    if(!user) {
+        return next(new ErrorHandler(`User ID: ${req.params.id} not found`))
+    }
+
+    res.status(200).json({
+        success: true,
+        user
+    })
+})
+
+// Change User Profile Details  --via--  /api/v1/admin/user/:id
+exports.adminUpdateUser = catchAsyncErrors ( async (req,res, next) => {
+    const userDataUpdate = {
+        name: req.body.name,
+        email: req.body.email,
+        role: req.body.role
+    }
+    // TODO dep cloudinary...Update avatar
+
+    const user = await User.findByIdAndUpdate(req.params.id, userDataUpdate, {
+        new: true,
+        runValidators: true,
+        useFindAndModify: false
+    })
+
+    res.status(200).json({
+        success: true,
+        message: 'User Profile Updated'
+    })
+})
+
+// Return single user details --via--  /api/v1/admin/user/:id
+exports.adminDeleteUser = catchAsyncErrors ( async (req, res, next) => {
+    const user = await User.findById(req.params.id);
+
+    if(!user) {
+        return next(new ErrorHandler(`User ID: ${req.params.id} not found`))
+    }
+
+    await user.remove()
+
+    const message = `Your account ${req.params.id} at BigBuy has been suspended please contact our customer services for clarity.`
+    try{
+        await sendEmail({
+            email: user.email, 
+            subject: 'BigBuy Account Suspended',
+            message
+        })
+        res.status(200).json({
+            success: true,
+            message: `Email sent to: ${user.email}`
+        })
+
+    } catch (error) {}
+    // TODO dep cloudinary...Delete avatar
+
+    res.status(200).json({
+        success: true,
+        message: `User Account ID ${user.id} ${user.name} by  has been deleted`
     })
 })
