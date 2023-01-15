@@ -49,7 +49,7 @@ API's - Stripe payment API
     - [x] Product Filtering
   - [ ] Setup Cloudinary storage of product pictures
 
-- [ ] User DB
+- [x] User DB
   - [x] Establish User Models
   - [x] Establish atlas DB
   - [x] Password Encryption    
@@ -65,12 +65,17 @@ API's - Stripe payment API
   - [ ] User CRUD
     - [x] Create User
     - [x] Logout User
-    - [ ] Edit User
-    - [ ] Delete User
-    - [ ] User blocking
+    - [x] Edit User
+    - [x] Delete User
+    - [x] User blocking
 
-- [ ] Orders DB
-  - [ ] Establish Order Models
+- [x] Orders DB
+  - [x] Establish Order Models
+  - [ ] Create Order
+  - [ ] Find Order by ID
+  - [ ] Find all User Orders
+  - [ ] Find Order by User
+  - [ ] Find Order by Product
 
 - [x] Pagination (browser overload)
 - [x] Error Handling
