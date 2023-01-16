@@ -1,8 +1,16 @@
 # ecommerce-site
 
-MERN STACK: - Mongoose, - Express.js, - React, - Node.js, - Javascript - Redux,
+MERN STACK: 
+  - Mongoose,
+  - Express.js,
+  - React,
+  - Node.js,
+  - Javascript,
+  - Redux,
 
-API's - Stripe payment API
+API's: 
+  - Stripe payment API
+  - Tailwind
 
 \*\*FRONTEND
 
