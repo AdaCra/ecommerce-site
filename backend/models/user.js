@@ -47,18 +47,18 @@ const userSchema = new mongoose.Schema({
             ]
         }
     },
-    suspension:{
-        status:{
+    suspensionStatus:{
             type: String,
-            default: 'Active',
+            default: 'Activated',
             enum: {
                 values: [
-                    'Active',
+                    'Activated',
                     'Suspended'
                 ]
-            }
+            },
+            required: true
         },
-        reason:{
+    suspensionReason:{
             type: String,
             default: 'Account is Active',
             enum:{
@@ -69,16 +69,15 @@ const userSchema = new mongoose.Schema({
                     'Contravention of T&C´s',
                     'Fraud',
                     'Harmful Behaviour',
-                    'Termination of Contract'
+                    'Contract Termination'
                 ]
-    
-            }
+            },
+            required: true
         },
-        dateModified:{
+    suspensionDateModified:{
             type: Date,
-            default: Date.now
-        }
-    },
+        },
+    
     createdAt: {
         type: Date,
         default: Date.now
@@ -125,4 +124,4 @@ userSchema.methods.getResetPasswordToken = function () {
 
     return resetToken
 }
-module.exports = mongoose.model('user', userSchema)
+module.exports = mongoose.model('User', userSchema)

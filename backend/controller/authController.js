@@ -7,10 +7,11 @@ const crypto = require('crypto');
 
 //user registration  --via--  /api/v1/register
 exports.registerUser = catchAsyncErrors (async (req, res, next) => {
-    const {name, email, password} = req.body;
+    const {name, surname, email, password} = req.body;
 
     const user = await User.create({
         name,
+        surname,
         email,
         password,
         avatar: {
@@ -48,12 +49,15 @@ exports.loginUser = catchAsyncErrors (async (req, res, next) => {
         return next(new ErrorHandler('Invalid User Email or Password', 401));
     }
 
-
     // check password legitimacy
     const passwordMatch = await user.comparePassword(password)
     if(!passwordMatch) {
         return next(new ErrorHandler('Invalid User Email or Password', 401));
     }
+    if(user.suspensionStatus === 'Suspended'){
+        return next(new ErrorHandler(`User Account was suspended on ${user.suspensionDateModified}, due to ${user.suspensionReason}`, 403));
+    }
+    console.log(user.suspensionStatus)
     sendToken(user, 200, res)
 })
 
@@ -73,7 +77,7 @@ exports.forgotPassword = catchAsyncErrors ( async ( req, res, next ) => {
     // create password reset URL
     const resetUrl = `${req.protocol}://${req.get('host')}/api/v1/password/reset/${resetToken}`;
 
-    const message = `Your password reset token is as follows:\n\n${resetUrl}\n\nThis link will only be valid for 30 minutes\n\n If you did not request this email, please ignore it.`
+    const message = `Dear ${user.name} ${user.surname},\n\nYour password reset token is as follows:\n\n${resetUrl}\n\nThis link will only be valid for 30 minutes\n\n If you did not request this email, please ignore this email.\n\n  \n\nFrom \n\nYour BigBuy Team.`
     try{
         await sendEmail({
             email: user.email, 
@@ -158,6 +162,7 @@ exports.getCurrentUser = catchAsyncErrors ( async (req,res, next) => {
 exports.updateProfile = catchAsyncErrors ( async (req,res, next) => {
     const userDataUpdate = {
         name: req.body.name,
+        surname: req.body.surname,
         email: req.body.email
     }
     // TODO dep cloudinary...Update avatar
@@ -217,6 +222,7 @@ exports.adminGetUserDetails = catchAsyncErrors ( async (req, res, next) => {
 exports.adminUpdateUser = catchAsyncErrors ( async (req,res, next) => {
     const userDataUpdate = {
         name: req.body.name,
+        surname: req.body.surname,
         email: req.body.email,
         role: req.body.role
     }
@@ -234,17 +240,31 @@ exports.adminUpdateUser = catchAsyncErrors ( async (req,res, next) => {
     })
 })
 
-// Return single user details --via--  /api/v1/admin/user/:id
-exports.adminDeleteUser = catchAsyncErrors ( async (req, res, next) => {
-    const user = await User.findById(req.params.id);
-
-    if(!user) {
-        return next(new ErrorHandler(`User ID: ${req.params.id} not found`))
+// Suspend User Profile  --via--  /api/v1/admin/user/suspension/:id
+exports.adminSuspendUser = catchAsyncErrors ( async (req,res, next) => {
+    const userSuspension = {
+        suspensionStatus: req.body.status,
+        suspensionReason: req.body.reason
     }
+    // TODO dep cloudinary...Update avatar
+    const user = await User.findByIdAndUpdate(req.params.id, userSuspension, {
+        new: true,
+        runValidators: true,
+        useFindAndModify: false
+    })
 
-    await user.remove()
+    user.suspensionDateModified = Date.now()
 
-    const message = `Your account ${req.params.id} at BigBuy has been suspended please contact our customer services for clarity.`
+    await user.save()
+
+    let msgFilter
+    if(user.suspensionStatus === 'Suspended') {
+        msgFilter = `, due to ${user.suspensionReason}. Please contact us if you need assistance.`
+    } else {
+        msgFilter = `. Please contact us if you need assistance.`
+    };
+
+    const message = `Dear ${user.name} ${user.surname},\n\nYour account at BigBuy was ${user.suspensionStatus} on ${user.suspensionDateModified}${msgFilter}\n\n  \n\nFrom \n\nYour BigBuy Team.`
     try{
         await sendEmail({
             email: user.email, 
@@ -257,10 +277,40 @@ exports.adminDeleteUser = catchAsyncErrors ( async (req, res, next) => {
         })
 
     } catch (error) {}
+
+    res.status(200).json({
+        success: true,
+        message: `User Account ID ${user.id} by ${user.name} ${user.surname} has been ${user.suspensionStatus}`
+    })
+})
+
+// Delete single user details --via--  /api/v1/admin/user/:id
+exports.adminDeleteUser = catchAsyncErrors ( async (req, res, next) => {
+    const user = await User.findById(req.params.id);
+
+    if(!user) {
+        return next(new ErrorHandler(`User ID: ${req.params.id} not found`))
+    }
+
+    await user.remove()
+
+    const message = `Dear ${user.name} ${user.surname},\n\nYour account ${req.params.id} at BigBuy has been deleted. Please contact our customer services for clarity.\n\n  \n\nFrom \n\nYour BigBuy Team.`
+    try{
+        await sendEmail({
+            email: user.email, 
+            subject: 'BigBuy Account Deleted',
+            message
+        })
+        res.status(200).json({
+            success: true,
+            message: `Email sent to: ${user.email}`
+        })
+
+    } catch (error) {}
     // TODO dep cloudinary...Delete avatar
 
     res.status(200).json({
         success: true,
-        message: `User Account ID ${user.id} ${user.name} by  has been deleted`
+        message: `User Account ID ${user.id} by ${user.name} ${user.surname} has been deleted`
     })
 })

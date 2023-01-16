@@ -20,6 +20,7 @@ const {
     adminGetUserDetails,
     adminUpdateUser,
     adminDeleteUser,
+    adminSuspendUser
  } = require('../controller/authController')
 
 
@@ -41,7 +42,7 @@ router.route('/admin/user/:id')
             .get(isAuthenticatedUser, authoriseRoles('admin'), adminGetUserDetails)
             .put(isAuthenticatedUser, authoriseRoles('admin'), adminUpdateUser)
             .delete(isAuthenticatedUser, authoriseRoles('admin'), adminDeleteUser)
-
+router.route('/admin/user/suspension/:id').put(isAuthenticatedUser, authoriseRoles('admin'), adminSuspendUser)
 
 
 
