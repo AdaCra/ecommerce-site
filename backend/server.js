@@ -7,7 +7,7 @@ process.on('uncaughtException', err =>{
 
 const app = require ('./app');
 const connectDatabase = require('./config/database');
-require('dotenv').config({ path: 'backend/config/config.env'});
+require('dotenv').config({ path: '.env'});
 
 //environment variables
 const PORT = process.env.PORT
