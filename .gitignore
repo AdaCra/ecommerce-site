@@ -8,6 +8,11 @@
 
 # production
 /build
+/backend/config/config.env
+backend/config/config.env
+/config/confing.env
+config/confing.env
+config.env
 *.env
 # misc
 .DS_Store
