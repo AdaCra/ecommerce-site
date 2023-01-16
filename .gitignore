@@ -11,6 +11,7 @@
 *.env
 .env
 /backend/config/config.env
+/backend/config/
 /frontend/.env.local
 /frontend/.env.development.local
 /frontend/.env.test.local
