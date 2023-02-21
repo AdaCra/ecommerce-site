@@ -7,10 +7,11 @@ const reducer = combineReducers ({
 })
 
 
-let initialState = {}
+let initialState = {};
 
-const middleware= [thunk];
-const store = createStore( reducer, 
+const middleware = [thunk];
+const store = createStore( 
+    reducer, 
     initialState, 
     composeWithDevTools, 
     ( applyMiddleware ( ...middleware )))
